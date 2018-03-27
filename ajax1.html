@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title>Ajax 1 - Text File</title>
+	</head>
+	<body>
+		<button id="button">Get Text File</button>
+		<br/><br/>
+		<div id="text"></div>
+
+		<script type="text/javascript">
+			document.getElementById("button").addEventListener('click', loadText);
+
+			function loadText(){
+				// Create XHR Objetc
+				var req = new XMLHttpRequest();
+				// OPEN - type, url/file, async
+				req.open('GET', 'sample2.txt', true);
+
+				console.log('READYSTATE: ', req.readyState); // 1
+
+				// Optional - used for loaders
+				req.onprogress = function(){
+					console.log('READYSTATE: ', req.readyState);
+				}
+
+				req.onload = function(){
+					if(this.status == 200){
+						console.log(this.responseText);
+						document.getElementById('text').innerHTML = this.responseText;
+					} else if(this.status == 404){
+						document.getElementById('text').innerHTML = 'NOT FOUND';
+
+					}
+				}
+
+				req.onerror = function(){
+						console.log('Request Error...');
+				}
+				// req.onreadystatechange = function(){
+				// 	console.log('READYSTATE: ', req.readyState);
+				//
+				// 	if(this.readyState == 4 && this.status == 200){
+				// 		console.log(this.responseText);
+				// 	}
+				// }
+
+				// readyState value
+				// 0: request not initialized
+				// 1: server connection established
+				// 2: request received
+				// 3: processing request
+				// 4: request finished and response is ready
+
+				// Sends request
+				req.send();
+			}
+
+		</script>
+	</body>
+</html>
